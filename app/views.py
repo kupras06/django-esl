@@ -20,10 +20,15 @@ import datetime
 
 @login_required(login_url="/account/login")
 def index(request, username):
+    if request.method=='POST':
+        id = request.POST.get('id')
+        print(id)
+        Tournament.objects.filter(id=id).delete()
+    print(request.method)
     user = User.objects.filter(username=request.user)
-    print(user)
+    # print(user)
     host = Tournament.objects.filter(creator=request.user)
-    print(host)
+    # print(host)
     register = Result.objects.filter(user=request.user)
     return render(request, "dashboard.html", {'host': host, 'reg': register})
 

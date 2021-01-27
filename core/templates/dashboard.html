@@ -115,10 +115,16 @@
               <tbody>
               {% for data in host %}
                 <tr>
+
+                <form method="POST" action={% url 'dashboard' user.username %}>
+                {% csrf_token %}
+                                <input id="id" name = 'id' value={{data.id}} hidden/>
                   <th scope="row">{{ data.event_name }}</th>
                   <td>{{ data.event_date}}</td>
                   <td>{{ data.game_name }}</td>
-                  <td>{{ data.register_count }}    </td>
+                  <td>{{ data.register_count }}   &nbsp; &nbsp;
+                  <input type='Submit' class="btn btn-danger" value='Delete' /> </td>
+                  </form>
                 </tr>
                 {% endfor %}
                </tbody>
