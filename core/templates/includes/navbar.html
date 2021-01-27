@@ -1,0 +1,73 @@
+{% load static %}
+
+{% load i18n %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-default fixed-top">
+  
+ <div class="container-fluid">
+        <a class="navbar-brand" href={% url 'home' %}>
+        <img src={% static 'assets/img/brand/esl.svg' %} alt="logo" ></a>
+        <!-- links toggle -->
+        <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#links" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-mine fa-bars"></i>
+        </button>
+        <!-- account toggle -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#account" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-mine fa-user"></i>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="links">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link fa-mine" href={% url 'about' %}>About</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="account">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated  %}
+                 <li class="nav-item">
+                <a href={% url 'dashboard' user.username %} class="nav-link fa-mine " >| <i class="fa fa-user-circle"></i>&nbsp;{{user.username}} </a>
+</li>
+                <li class="nav-item">
+                <a href="#logoutModal"  class="nav-link fa-mine " data-toggle="modal" data-target="#exampleModal">| <i class="fa fa-sign-out-alt"></i>&nbsp;Logout |</a>
+</li>   
+       
+  {% else %}
+      <a class="nav-link fa-mine" href={% url 'account_login' %}>|<i class="fa fa-sign-in-alt"></i>&nbsp;LogIn |</a>
+  
+    {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- LOGOUT MODAL -->
+<div class="modal fade mx-auto" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mx-auto" id="exampleModalLabel">We Will Miss You</h5>
+       
+      </div>
+      <div class="modal-body">
+        <h2 class="text-center"> ARE YOU SURE !!! </h2>
+
+      </div>
+      <div class="modal-footer mx-auto">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button type="submit" class="btn btn-danger">SURE</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>

@@ -1,0 +1,90 @@
+{% extends 'layouts/base.html' %} {% block title %} Create Event {% endblock title%}
+{% load crispy_forms_tags %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block content %}
+<!-- Header -->
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-blue font-weight h1 text-center text-uppercase mb-0"  >
+                    Register for a Event
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--4 justify-content-center mb-4">
+  <div class="row">
+    <div class="mx-auto col-xl-8 mb-5 mb-xl-0">
+      <div class="card bg-warning shadow">
+        <div class="card-header bg-transparent">
+          <div class="row align-items-center">
+            <div class="col">
+              <h2 class="text-white mb-0">Currently Active Leagues</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body card h-100">
+          <!-- Chart -->
+          {% comment %} <div class="chart"> {% endcomment %}
+         <!-- Chart wrapper -->
+            <table class="table font-weight text-white align-items-center bg-default" >
+              <thead>
+                <tr>
+                  <th scope="col">Event name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Game Name</th>
+                  <th scope="col">Register</th>
+                </tr>
+              </thead>
+              <tbody><tr>
+              {% for data in form %}
+
+              <form method="POST" action".">
+              {% csrf_token %}
+              <input name = "id" value={{ data.id  }}  title="Text"  hidden />
+                
+                  <td>{{ data.event_name }}<input name = "event_name" id="codepoint_input" type="text" value={{ data.event_name  }}  title="Text" hidden /></td>
+                  <td>{{ data.event_date}}<input name = "event_date" id="codepoint_input" type="date" value={{ data.event_date  }}  title="Text" hidden></td>
+        
+                  <td>{{ data.game_name }}<input name = "game_name" id="codepoint_input" type="text" value={{ data.game_name  }}  title="Text" hidden></td></td>
+                  <td>  <button type="submit" class="btn btn-primary">Register</button>    </td>
+                         
+</form>
+                </tr>
+                {% endfor %}
+        
+    </tr>
+               </tbody>
+            </table>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <script>
+      $(function () {
+        $("#datetimepicker1").datetimepicker();
+      });
+    </script>
+
+{% include "includes/footer.html" %} {% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

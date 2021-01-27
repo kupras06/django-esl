@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   <title>
-    Argon Dashboard Django - {% block title %} Open-Source Admin Panel {% endblock %} | Creative-Tim
+    ESL - {% block title %} {% endblock %} 
   </title>
 
   <!-- Favicon - loaded as static -->
@@ -59,6 +59,30 @@
 
   <!-- Specific JS goes HERE --> 
   {% block javascripts %}{% endblock javascripts %}
+<div class="modal fade mx-auto" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mx-auto" id="exampleModalLabel">We Will Miss You</h5>
+       
+      </div>
+      <div class="modal-body">
+        <h2 class="text-center"> ARE YOU SURE !!! </h2>
+
+      </div>
+      <div class="modal-footer mx-auto">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button type="submit" class="btn btn-danger">SURE</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 
