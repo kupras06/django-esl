@@ -9,5 +9,5 @@ urlpatterns = [
     path('',esl_views.home,name='home'),
     path('about/',esl_views.about,name='about'),
     path('accounts/', include('allauth.urls')),
-    path('<str:username>/', include('app.urls')),
+    path('<str:username>/', include('esl.urls')),
 ]
