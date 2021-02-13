@@ -10,13 +10,14 @@
   <link href="{% static 'assets/img/brand/logo.svg' %}" rel="icon" type="image/png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="/static/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link rel="stylesheet" href = {% static 'assets/js/plugins/nucleo/css/nucleo.css' %}
+  {% comment %} <link href="/static/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" /> {% endcomment %}
   <link href="/static/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <link href="/static/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <link href={% static 'assets/css/custom.css' %} rel="stylesheet" />
+  <link href='/static/assets/css/custom.css' rel="stylesheet" />
 
   <link href="/static/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
   {% block stylesheets %}{% endblock stylesheets %}
