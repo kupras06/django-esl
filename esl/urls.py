@@ -5,7 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from django.urls import path, re_path
-from app import views
+from . import views
 
 urlpatterns = [
     path('dashboard', views.index, name='dashboard'),
