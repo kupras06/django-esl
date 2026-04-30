@@ -1,4 +1,3 @@
-import datetime
 from django import forms
 
 
@@ -11,8 +10,9 @@ class CreateEventForm(forms.Form):
     event_name = forms.CharField(required=True)
     game_name = forms.CharField(required=True)
     registration_starts = forms.DateTimeField(
-        required=True, input_formats=['%d/%m/%Y %H:%M'])
-    event_date = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
+        required=True, input_formats=["%d/%m/%Y %H:%M"]
+    )
+    event_date = forms.DateTimeField(input_formats=["%d/%m/%Y %H:%M"])
 
 
 class EditUserForm(forms.Form):

@@ -24,18 +24,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    ESL - {% block title %}{% endblock %} 
+    ESL - {% block title %}{% endblock %}
   </title>
 
   <!-- Favicon - loaded as static -->
   <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png">
-  
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
   <link href="/static/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
   <link href="/static/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
+  <link href="{% static 'assets/css/tailwind.css' %}" rel="stylesheet" />
   <link href="/static/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
 
   <link href="/static/assets/css/custom.css" rel="stylesheet" />
@@ -56,7 +57,7 @@
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
-                     
+
             </div>
           </div>
         </div>
@@ -67,13 +68,13 @@
         </svg>
       </div>
     </div>
-    
+
     {% block content %}{% endblock content %}
 
-  {% include "includes/footer.html" %} 
+  {% include "includes/footer.html" %}
 
   </div>
-    
+
   {% include "includes/scripts-fullscreen.html" %}
 
 </body>

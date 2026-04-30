@@ -1,30 +1,21 @@
-from django.shortcuts import render
-
-# Create your views here.
-# -*- encoding: utf-8 -*-
 """
 License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
-# import simplejson as json
-from django.conf.urls import url
-import requests
-from django.contrib.auth import login
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.template import loader
-from django.http import HttpResponse
-from django import template
-from .forms import *
-from esl.models import Profile, Tournament, Result
 from django.contrib.auth.models import User
-import datetime
+from django.shortcuts import render
+
+from esl.models import Profile, Result, Tournament
+
+from .forms import *
 
 
 @login_required(login_url="/account/login")
 def index(request, username):
-    if request.method=='POST':
-        id = request.POST.get('id')
+    if request.method == "POST":
+        id = request.POST.get("id")
         print(id)
         Tournament.objects.filter(id=id).delete()
     print(request.method)
@@ -33,28 +24,28 @@ def index(request, username):
     host = Tournament.objects.filter(creator=request.user)
     # print(host)
     register = Result.objects.filter(user=request.user)
-    return render(request, "dashboard.html", {'host': host, 'reg': register})
+    return render(request, "dashboard.html", {"host": host, "reg": register})
 
 
 @login_required
 def profile(request, username):
     print(request.method)
-    if request.method=='POST':
+    if request.method == "POST":
         temp = Profile.objects.get(user=request.user)
-        print(request.POST.get('new-address'))
-        temp.address = request.POST.get('new-address')
-        temp.city = request.POST.get('new-city')
-        temp.country = request.POST.get('new-country')
-        temp.state = request.POST.get('new-state')
-        temp.pin_code = request.POST.get('new-pin')
+        print(request.POST.get("new-address"))
+        temp.address = request.POST.get("new-address")
+        temp.city = request.POST.get("new-city")
+        temp.country = request.POST.get("new-country")
+        temp.state = request.POST.get("new-state")
+        temp.pin_code = request.POST.get("new-pin")
 
-        temp.state = request.POST.get('new-state')
+        temp.state = request.POST.get("new-state")
         temp.save()
         # temp.address =
     data = {}
     data["user"] = request.user
     data["email"] = request.user.email
-    data['image'] = " static 'assets/img/brand/esl.svg'"
+    data["image"] = " static 'assets/img/brand/esl.svg'"
     # if request.user.socialaccount_set.all.0.get_avatar_url:
     #     data['image'] = request.user.socialaccount_set.all.0.get_avatar_url
     data["first_name"] = request.user.first_name
@@ -66,11 +57,11 @@ def profile(request, username):
     data["country"] = profile.country
     data["pin"] = profile.pin_code
     data["dob"] = profile.birth_date
-    data['state'] = profile.state
+    data["state"] = profile.state
     # print(request.user.email)
     # print(request.method)
     form = EditUserForm()
-    return render(request, "profile.html", {"data": data, 'form': form})
+    return render(request, "profile.html", {"data": data, "form": form})
 
 
 @login_required
@@ -87,7 +78,7 @@ def createEvent(request, username):
         tour.save()
 
     form = CreateEventForm()
-    return render(request, "create-event.html", {'form': form})
+    return render(request, "create-event.html", {"form": form})
 
 
 @login_required
@@ -98,24 +89,24 @@ def register(request, username):
         tour = Result()
         tour.user = request.user
         data = dict(request.POST)
-        print(data['id'])
+        print(data["id"])
 
-        curEvent = Tournament.objects.get(id=data['id'][0])
+        curEvent = Tournament.objects.get(id=data["id"][0])
         tour.event = curEvent
         tour.position = 0
 
-        if (tour.user == curEvent.creator):
+        if tour.user == curEvent.creator:
             print("HOST CANNOT REGISTER")
         else:
             tour.save()
     events = Tournament.objects.all()
     print(events)
-    return render(request, "register.html", {'form': events})
+    return render(request, "register.html", {"form": events})
+
 
 def home(request):
-    return render(request,'home.html')
-
+    return render(request, "home.html")
 
 
 def about(request):
-    return render(request,'about.html')
+    return render(request, "about.html")

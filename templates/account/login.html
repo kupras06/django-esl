@@ -1,97 +1,86 @@
 {% extends 'layouts/base-fullscreen.html' %}
-{% load socialaccount %}
+{% load static socialaccount %}
 {% block title %} Login {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
-{% include 'includes/navbar.html' %}
+
 {% block content %}
 
-    <!-- Page content -->
-    <div class="container mt--200 pb-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
-          <div class="card bg-secondary shadow border-0">
-            <div class="card-header bg-transparent pb-5">
-              <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
-              <div class="btn-wrapper text-center">
-                <a href={% provider_login_url 'github' %}  class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="/static/assets/img/icons/common/github.svg"></span>
-                  <span class="btn-inner--text">Github</span>
-                </a>
-                <a href={% provider_login_url 'google' %} class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="/static/assets/img/icons/common/google.svg"></span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
-              </div>
-            </div>
-            <div class="card-body px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+      <div class="text-center">
+        <h2 class="mt-2 text-3xl font-extrabold text-gray-900">Sign in</h2>
+        <p class="mt-2 text-sm text-gray-600">Use Your Credentials or <a href="{% url 'account_signup' %}" class="font-medium text-indigo-600 hover:text-indigo-500">create a new one</a></p>
+      </div>
 
-                {% if msg %}
-                  <p>{{ msg }}</p>
-                {% else %}
-                  <p>
-                    Use Your Credentials 
-                    <br />
-                    OR <a href={% url 'account_signup' %} >Create a new one</a>
-                  </p>
-                {% endif %}  
+      {% if msg %}
+        <div class="mt-4 rounded-md bg-red-50 p-4 text-sm text-red-700">
+          {{ msg }}
+        </div>
+      {% endif %}
 
-              </div>
+      <div class="mt-6">
+        <a href="{% provider_login_url 'google' %}" class="w-full inline-flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+          <img src="{% static 'assets/img/icons/common/google.svg' %}" class="h-5 w-5 mr-2" alt="Google">
+          Sign in with Google
+        </a>
+      </div>
 
-              <form method="POST">
-          {% comment %} {{ form.as_table}} {% endcomment %}
-                {% csrf_token %}
-                <div class="form-group mb-3">
-                  <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                    </div>
-                    {{ form.login }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                    </div>
-                    {{ form.password }}
-                  </div>
-                </div>
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id="id_remember" type="checkbox">
-                  <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted">Remember me</span>
-                  </label>
-                </div>
-                <div class="text-center">
-                 <a href="{% url 'account_signup' %}" class="btn btn-primary my-4 text-white">Register</a>
-                  <button type="submit" class="btn btn-primary my-4">Sign in</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          
+      <div class="relative mt-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-200"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-white text-gray-500">Or continue with</span>
         </div>
       </div>
+
+      <form method="POST" class="mt-6 space-y-4">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="rounded-md bg-red-50 p-3 text-red-700">
+            {% for error in form.non_field_errors %}
+              <div class="text-sm">{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div>
+          <label for="{{ form.login.id_for_label }}" class="sr-only">Email</label>
+          {{ form.login.as_widget(attrs={"class":"appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm","placeholder":"Email"}) }}
+          {% if form.login.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ form.login.errors|first }}</p>
+          {% endif %}
+        </div>
+        <div>
+          <label for="{{ form.password.id_for_label }}" class="sr-only">Password</label>
+          {{ form.password.as_widget(attrs={"class":"appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm","placeholder":"Password"}) }}
+          {% if form.password.errors %}
+            <p class="mt-2 text-sm text-red-600">{{ form.password.errors|first }}</p>
+          {% endif %}
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input id="id_remember" name="remember" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+            <label for="id_remember" class="ml-2 block text-sm text-gray-900">Remember me</label>
+          </div>
+          <div class="text-sm">
+            <a href="{% url 'account_reset_password' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Sign in</button>
+        </div>
+        <div>
+          <a href="{% url 'account_signup' %}" class="w-full inline-flex justify-center py-2 px-4 border border-indigo-600 rounded-md text-indigo-600 bg-indigo-50 hover:bg-indigo-100 font-medium">Register</a>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
 
-
-{% comment %} 
- <form
-      class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"
-    >
-      <div class="form-group mb-0">
-        <div class="input-group input-group-alternative">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-search"></i></span>
-          </div>
-          <input class="form-control" placeholder="Search" type="text" />
-        </div>
-      </div>
-    </form> {% endcomment %}
 {% endblock content %}
 
-<!-- Specific JS goes HERE --> 
+<!-- Specific JS goes HERE -->
 {% block javascripts %}{% endblock javascripts %}
